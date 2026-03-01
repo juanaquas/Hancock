@@ -973,6 +973,9 @@ def main():
     parser.add_argument("--model",   default=None, help="Model ID (overrides backend default)")
     parser.add_argument("--server",  action="store_true", help="Run as REST API server")
     parser.add_argument("--port",    type=int, default=int(os.getenv("HANCOCK_PORT", "5000")))
+    # Compatibility / no-op flags for autopilot runners
+    parser.add_argument("--max-autopilot-continues", type=int, default=None, help="Optional autopilot hint (ignored by Hancock)")
+    parser.add_argument("--allow-all", action="store_true", help="Optional autopilot hint (ignored by Hancock)")
     args = parser.parse_args()
 
     backend = os.getenv("HANCOCK_LLM_BACKEND", "ollama").lower()
