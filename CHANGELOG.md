@@ -32,6 +32,19 @@ Versioning: [Semantic Versioning](https://semver.org/)
 - **Oracle Cloud setup script** installs Ollama + pulls `llama3.1:8b`; no NVIDIA key required
 - **Updated banner** — reflects Ollama + Llama 3.1 instead of NIM + Mistral
 
+## [Unreleased] — v0.6.0
+
+### Added
+- **GraphQL Security Module** — comprehensive authentication/authorization testing framework:
+  - `collectors/graphql_security_kb.py`: Knowledge base with 9 detailed Q&A pairs covering IDOR/BOLA, JWT security, field-level authorization, mutation testing, rate limiting, and remediation strategies
+  - `collectors/graphql_security_tester.py`: Automated security testing tool for GraphQL endpoints with IDOR detection, JWT algorithm confusion testing, mutation authorization checks, and field-level authorization validation
+  - `docs/graphql-security-guide.md`: Complete security implementation guide with TypeScript and Python examples, including secure resolvers, authentication context setup, and deployment checklists
+  - `tests/test_graphql_security.py`: Comprehensive test suite with 16 unit tests validating KB content quality, security coverage, and tester functionality
+  - Educational content for identifying and remediating GraphQL IDOR vulnerabilities (HIGH severity)
+  - Best practices for JWT security (RS256/ES256 algorithms), rate limiting, introspection controls, and query complexity limits
+  - Production-ready remediation templates with phased rollout strategy
+- **README updates** — added GraphQL Security mode to feature table and usage examples
+
 ## [Unreleased] — v0.4.0
 
 ### Added
