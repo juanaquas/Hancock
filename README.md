@@ -129,6 +129,7 @@ Start the server: `python hancock_agent.py --server`
 |--------|----------|-------------|
 | `GET`  | `/health`       | Agent status and capabilities |
 | `GET`  | `/metrics`      | Prometheus-compatible request counters |
+| `GET`  | `/v1/agents`    | All agent system prompts and defaults |
 | `POST` | `/v1/chat`      | Conversational AI with history + streaming |
 | `POST` | `/v1/ask`       | Single-shot question |
 | `POST` | `/v1/triage`    | SOC alert triage + MITRE ATT&CK mapping |

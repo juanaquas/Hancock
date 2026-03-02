@@ -65,6 +65,28 @@ paths:
                   modes:      { type: array, items: { type: string } }
                   endpoints:  { type: array, items: { type: string } }
 
+  /v1/agents:
+    get:
+      summary: List available agent prompts and metadata
+      tags: [System]
+      responses:
+        "200":
+          description: Agent system prompts and defaults
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  agents:
+                    type: object
+                    additionalProperties:
+                      type: string
+                  default_mode:
+                    type: string
+                    example: auto
+                  model:
+                    type: string
+
   /metrics:
     get:
       summary: Prometheus-compatible metrics

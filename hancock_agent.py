@@ -460,7 +460,8 @@ def build_app(client, model: str):
             "models_available": MODELS,
             "endpoints": ["/v1/chat", "/v1/ask", "/v1/triage",
                           "/v1/hunt", "/v1/respond", "/v1/code",
-                          "/v1/ciso", "/v1/sigma", "/v1/yara", "/v1/ioc", "/v1/webhook", "/metrics"],
+                          "/v1/ciso", "/v1/sigma", "/v1/yara", "/v1/ioc",
+                          "/v1/agents", "/v1/webhook", "/metrics"],
         })
 
     @app.route("/metrics", methods=["GET"])
@@ -492,6 +493,21 @@ def build_app(client, model: str):
         for m, cnt in snap["by_mode"].items():
             lines.append(f'hancock_requests_by_mode{{mode="{m}"}} {cnt}')
         return Response("\n".join(lines) + "\n", mimetype="text/plain; version=0.0.4")
+
+    @app.route("/v1/agents", methods=["GET"])
+    def agents_endpoint():
+        """Return available agent system prompts for automation."""
+        ok, err, _ = _check_auth_and_rate()
+        if not ok:
+            _inc("errors_total")
+            return jsonify({"error": err}), 401 if "Unauthorized" in err else 429
+        _inc("requests_total"); _inc("requests_by_endpoint", "/v1/agents")
+        prompts = {name: prompt for name, prompt in SYSTEMS.items() if prompt}
+        return jsonify({
+            "agents": prompts,
+            "default_mode": DEFAULT_MODE,
+            "model": model,
+        })
 
     @app.route("/v1/chat", methods=["POST"])
     def chat_endpoint():

@@ -63,6 +63,21 @@ class TestHealth:
         assert "/v1/code" in eps
 
 
+# ── /v1/agents ───────────────────────────────────────────────────────────────
+
+class TestAgents:
+    def test_agents_returns_prompts(self, client):
+        r = client.get("/v1/agents")
+        assert r.status_code == 200
+        data = r.get_json()
+        agents = data["agents"]
+        for name in ["pentest", "soc", "auto", "code", "ciso", "sigma", "yara", "ioc"]:
+            assert name in agents
+            assert isinstance(agents[name], str)
+            assert agents[name]
+        assert data["default_mode"] == "auto"
+
+
 # ── /v1/ask ───────────────────────────────────────────────────────────────────
 
 class TestAsk:
