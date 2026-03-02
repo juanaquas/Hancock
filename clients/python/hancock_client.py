@@ -110,7 +110,7 @@ class HancockClient:
         coder_model: str = "qwen-coder",
         base_url: str = "https://integrate.api.nvidia.com/v1",
     ):
-        require_openai(OpenAI)
+        require_openai()
         key = api_key or os.environ.get("NVIDIA_API_KEY")
         if not key:
             raise ValueError(
