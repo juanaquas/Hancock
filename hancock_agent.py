@@ -35,7 +35,7 @@ import json
 import os
 import sys
 import readline  # noqa: F401 — enables arrow-key history in CLI
-from hancock_constants import OPENAI_IMPORT_ERROR_MSG, require_openai
+from hancock_constants import require_openai
 
 try:
     from openai import OpenAI
