@@ -46,11 +46,10 @@ def require_openai(client_cls: Optional[object] = None) -> None:
 try:
     from openai import OpenAI
 except ImportError:  # allow import; require_openai() enforces dependency in constructor
-    from openai import OpenAI
-except ImportError:  # allow import; require_openai() enforces dependency in constructor
     OpenAI = None  # type: ignore
 
 # ── Models ──────────────────────────────────────────────────────────────────
+MODELS: dict[str, str] = {
 MODELS: dict[str, str] = {
     "mistral-7b":   "mistralai/mistral-7b-instruct-v0.3",
     "qwen-coder":   "qwen/qwen2.5-coder-32b-instruct",
