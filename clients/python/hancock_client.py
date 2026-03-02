@@ -50,7 +50,6 @@ except ImportError:  # allow import; require_openai() enforces dependency in con
 
 # ── Models ──────────────────────────────────────────────────────────────────
 MODELS: dict[str, str] = {
-MODELS: dict[str, str] = {
     "mistral-7b":   "mistralai/mistral-7b-instruct-v0.3",
     "qwen-coder":   "qwen/qwen2.5-coder-32b-instruct",
     "llama-8b":     "meta/llama-3.1-8b-instruct",
