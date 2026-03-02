@@ -66,7 +66,6 @@ It operates in three specialist modes and exposes a clean REST API.
 | 🔍 **Sigma** | Sigma detection rule authoring with ATT&CK tagging | ✅ Live |
 | 🦠 **YARA** | YARA malware detection rule authoring | ✅ Live |
 | 🔎 **IOC** | Threat intelligence enrichment for IOCs | ✅ Live |
-| 🔐 **GraphQL Security** | GraphQL auth/authz testing, IDOR detection, JWT security | ✅ Live |
 
 ---
 
@@ -178,19 +177,6 @@ curl -X POST http://localhost:5000/v1/yara \
 curl -X POST http://localhost:5000/v1/ioc \
   -H "Content-Type: application/json" \
   -d '{"indicator": "185.220.101.35", "type": "ip"}'
-```
-
-**GraphQL Security Testing:**
-```bash
-# Generate GraphQL security knowledge base
-python collectors/graphql_security_kb.py
-
-# Run GraphQL security tests (requires authorization)
-python collectors/graphql_security_tester.py \
-  --url https://api.example.com/graphql \
-  --token <jwt-token> \
-  --verbose \
-  --report graphql_security_report.json
 ```
 
 **CISO Board Summary:**
@@ -310,9 +296,7 @@ collectors/
 ├── soc_collector.py / soc_kb.py
 ├── cisa_kev_collector.py       # CISA Known Exploited Vulnerabilities
 ├── atomic_collector.py         # Atomic Red Team test cases
-├── ghsa_collector.py           # GitHub Security Advisories
-├── graphql_security_kb.py      # GraphQL auth/authz vulnerability KB
-└── graphql_security_tester.py  # GraphQL security testing framework
+└── ghsa_collector.py           # GitHub Security Advisories
 
 formatter/
 ├── to_mistral_jsonl.py         # v1 formatter
