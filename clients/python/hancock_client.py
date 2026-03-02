@@ -20,32 +20,32 @@ from __future__ import annotations
 import os
 from typing import Optional
 
-try:
-    from hancock_constants import OPENAI_IMPORT_ERROR_MSG, require_openai
-except ImportError:
-    # Fallback definitions when hancock_constants is not available (e.g., in installed package).
-    OPENAI_IMPORT_ERROR_MSG = (
-        "The 'openai' package is required to use HancockClient. "
-        "Install it with 'pip install openai' and ensure NVIDIA_API_KEY is set."
-    )
+# Canonical definitions for OpenAI dependency handling. These are defined
+# locally so they work consistently in both the repo and the packaged SDK,
+# without relying on an external module that may not be included.
+OPENAI_IMPORT_ERROR_MSG = (
+    "The 'openai' package is required to use HancockClient. "
+    "Install it with 'pip install openai' and ensure NVIDIA_API_KEY is set."
+)
 
-    def require_openai(client_cls: Optional[object] = None) -> None:
-        """
-        Ensure that the optional 'openai' dependency is available.
+def require_openai(client_cls: Optional[object] = None) -> None:
+    """
+    Ensure that the optional 'openai' dependency is available.
 
-        This mirrors the behavior of the helper from hancock_constants: it defers
-        the ImportError until runtime (e.g., in the constructor) and provides a
-        clear error message when the dependency is missing.
+    This defers the ImportError until runtime (e.g., in the constructor) and
+    provides a clear error message when the dependency is missing.
 
-        The optional client_cls argument is accepted for compatibility with call
-        sites that invoke require_openai(OpenAI); if not provided, the module-level
-        OpenAI symbol is used.
-        """
-        client = client_cls if client_cls is not None else OpenAI  # type: ignore[name-defined]
-        if client is None:
-            raise ImportError(OPENAI_IMPORT_ERROR_MSG)
+    The optional client_cls argument is accepted for compatibility with call
+    sites that invoke require_openai(OpenAI); if not provided, the module-level
+    OpenAI symbol is used.
+    """
+    client = client_cls if client_cls is not None else OpenAI  # type: ignore[name-defined]
+    if client is None:
+        raise ImportError(OPENAI_IMPORT_ERROR_MSG)
 
 try:
+    from openai import OpenAI
+except ImportError:  # allow import; require_openai() enforces dependency in constructor
     from openai import OpenAI
 except ImportError:  # allow import; require_openai() enforces dependency in constructor
     OpenAI = None  # type: ignore
