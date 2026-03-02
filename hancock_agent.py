@@ -246,6 +246,14 @@ BANNER = """
 """
 
 
+def require_openai_or_exit() -> None:
+    """Ensure OpenAI dependency is available or exit with a clear message."""
+    try:
+        require_openai(OpenAI)
+    except ImportError:
+        sys.exit(OPENAI_IMPORT_ERROR_MSG)
+
+
 def make_ollama_client() -> OpenAI:
     """Returns an OpenAI-compatible client pointed at the local Ollama server."""
     try:
@@ -253,6 +261,7 @@ def make_ollama_client() -> OpenAI:
     except ImportError as exc:
         # Provide a clean, actionable message instead of a full traceback
         sys.exit(str(exc))
+    require_openai_or_exit()
     return OpenAI(base_url=OLLAMA_BASE_URL, api_key="ollama")
 
 
@@ -263,6 +272,7 @@ def make_client(api_key: str) -> OpenAI:
     except ImportError as exc:
         # Provide a clean, actionable message instead of a full traceback
         sys.exit(str(exc))
+    require_openai_or_exit()
     return OpenAI(base_url=NIM_BASE_URL, api_key=api_key)
 
 
