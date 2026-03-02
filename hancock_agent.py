@@ -248,13 +248,21 @@ BANNER = """
 
 def make_ollama_client() -> OpenAI:
     """Returns an OpenAI-compatible client pointed at the local Ollama server."""
-    require_openai(OpenAI)
+    try:
+        require_openai(OpenAI)
+    except ImportError as exc:
+        # Provide a clean, actionable message instead of a full traceback
+        sys.exit(str(exc))
     return OpenAI(base_url=OLLAMA_BASE_URL, api_key="ollama")
 
 
 def make_client(api_key: str) -> OpenAI:
     """Returns an OpenAI-compatible client pointed at NVIDIA NIM (legacy)."""
-    require_openai(OpenAI)
+    try:
+        require_openai(OpenAI)
+    except ImportError as exc:
+        # Provide a clean, actionable message instead of a full traceback
+        sys.exit(str(exc))
     return OpenAI(base_url=NIM_BASE_URL, api_key=api_key)
 
 
